@@ -1,1 +1,85 @@
-<!-- daily-water-activity-weather.html content -->
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>운동 & 기온 보정 물 섭취량 계산기</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background: #eef5ff;
+      padding: 20px;
+      text-align: center;
+    }
+    .calculator {
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 30px;
+      max-width: 450px;
+      margin: auto;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+    .calculator h2 {
+      margin-bottom: 20px;
+    }
+    .calculator input, .calculator select {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 16px;
+    }
+    .calculator button {
+      background: #28a745;
+      color: #fff;
+      padding: 12px;
+      border: none;
+      width: 100%;
+      font-size: 16px;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+    .calculator .result {
+      margin-top: 20px;
+      font-weight: bold;
+      font-size: 18px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <div class="calculator">
+    <h2>운동 & 기온 보정 물 섭취량 계산기</h2>
+    <label for="exercise">운동 시간 (분):</label>
+    <input type="number" id="exercise" placeholder="예: 30">
+
+    <label for="temperature">기온대 선택:</label>
+    <select id="temperature">
+      <option value="0">10도 이하 (추움)</option>
+      <option value="50">10~19도 (선선함)</option>
+      <option value="150">20~29도 (따뜻함)</option>
+      <option value="250">30도 이상 (매우 더움)</option>
+    </select>
+
+    <button onclick="calculateExtraWater()">보정량 계산하기</button>
+    <div class="result" id="extraResult"></div>
+  </div>
+
+  <script>
+    function calculateExtraWater() {
+      var exercise = parseFloat(document.getElementById('exercise').value);
+      var temperature = parseFloat(document.getElementById('temperature').value);
+      if (isNaN(exercise)) {
+        alert('운동 시간을 입력해주세요.');
+        return;
+      }
+      var exerciseWater = exercise * 12; // 분당 12ml 가정
+      var totalExtra = exerciseWater + temperature;
+      var liter = (totalExtra / 1000).toFixed(2);
+      document.getElementById('extraResult').innerHTML =
+        "추가 섭취 권장량은 약 <strong>" + totalExtra.toFixed(0) + "ml</strong> (" + liter + "L) 입니다.";
+    }
+  </script>
+</body>
+</html>
